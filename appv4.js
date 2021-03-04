@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 //ejemplo de redirecting request
+//bug: ya no pasa por /message ni muestra el mensaje
 
 const server = http.createServer((req, res) => {
     const url = req.url;
@@ -14,7 +15,21 @@ const server = http.createServer((req, res) => {
         //notese que el resultado es desde /message
     }
     if(url ==='/message' && method === 'POST'){
-        fs.writeFileSync('message.txt', 'Some lorem ipsum');
+        /*se crea una especia de buffer con el evento data 
+        end se usa para finalizar el buffer
+        esta es una estructura de datos eficiente
+        */
+        const body = [];
+        req.on('data', (chunk) => {
+            console.log("chunk: " + chunk);
+            body.push(chunk);
+        });
+        req.on('end', () => {
+            const parsedBody = Buffer.concat(body).toString();
+            console.log("parsed Body: "+parsedBody);            
+            const message = parsedBody.split('=')[1]; //elimine el signo mas de parsedBody
+            fs.writeFileSync('message.txt', message);
+        });
         res.statusCode = 302;
         res.setHeader('Location', '/');
         return res.end();
