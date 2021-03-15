@@ -5,11 +5,10 @@ const requestHandler = (req, res) => {
     const url = req.url;
     const method = req.method;
 
-    if(url ==='/'){
+    if(url ==='/users'){
         res.write('<html>');
         res.write('<head><title>List of Clients</title></head>');
-        res.write('<body><div><form action="/create-user" method="POST"><input type="text" name="txtnewuser"><button type="submit">Add Client</button></form></div>');
-        res.write('<div><h3>List of Clients</h3>');
+        res.write('<body><div><h3>List of Clients</h3>');
         res.write('<ul><li>Ronald Koeman</li><li>Joan Laporta</li></ul>');        
         res.write('</div></body></html>');        
         return res.end(); 
@@ -20,26 +19,20 @@ const requestHandler = (req, res) => {
             console.log("chunk: " + chunk);
             body.push(chunk);
         });
-        return req.on('end', () => { //con return el programa se queda patinando
+        return req.on('end', () => { 
             const parsedBody = Buffer.concat(body).toString();
-            console.log("parsed Body: "+parsedBody);            
-            const message = parsedBody.split('=')[1]; //elimine el signo mas de parsedBody
-            //fs.writeFileSync('message.txt', message); //para arc grandes no es bueno operarlos sincrono
-            /* funcion que escribe del archivo de manera asincrona
-            el codigo se gestiona mediante un bloque
-            ahora tenemos 2 event listeners, a esto se le llama event driven arq.
-            */
-            fs.writeFile('message.txt', message, err => {
-                res.statusCode = 302;
-                res.setHeader('Location', '/');
-                return res.end();
-            });
+            console.log("new user added: "+parsedBody);            
+            res.setHeader('Location', '/users');
+            return res.end();
         });
     }
     res.setHeader('Content-Type', 'text/html');
     res.write('<html>');
-    res.write('<head><title>My first page</title></head>');
-    res.write('<body><h1>Hello from Node.Js Server!</h1></body>');
+    res.write('<head><title>Welcome Home</title></head>');
+    res.write('<body><h1>Hello everyone</h1>');
+    res.write('<h3>Greetings from the root page of the app</h3>');    
+    res.write('<a href="/users">List of Clients</a></body>');    
+    res.write('<div><form action="/create-user" method="POST"><input type="text" name="txtnewuser"><button type="submit">Add Client</button></form></div>');    
     res.write('</html>');
     res.end();
 };
