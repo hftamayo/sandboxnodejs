@@ -21,7 +21,8 @@ const requestHandler = (req, res) => {
         });
         return req.on('end', () => { 
             const parsedBody = Buffer.concat(body).toString();
-            console.log("new user added: "+parsedBody);            
+            console.log("new user added: "+parsedBody);   
+            res.statusCode = 302; //sin esta propiedad no redirecciona         
             res.setHeader('Location', '/users');
             return res.end();
         });
