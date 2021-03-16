@@ -1,0 +1,24 @@
+{
+  "name": "sandboxnodejs",
+  "version": "1.0.0",
+  "description": "sandbox project during learning phase",
+  "main": "appv7.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node appv7.js",
+    "hwork01": "node hwork01/hwork01.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hftamayo/sandboxnodejs.git"
+  },
+  "keywords": [
+    "nodejs101"
+  ],
+  "author": "hftamayo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hftamayo/sandboxnodejs/issues"
+  },
+  "homepage": "https://github.com/hftamayo/sandboxnodejs#readme"
+}
