@@ -9,7 +9,7 @@ const requestHandler = (req, res) => {
     if(url ==='/'){
         res.write('<html>');
         res.write('<head><title>Enter a message</title></head>');
-        res.write('<body><form action="/message" method="POST"><input type="text" name="txtmessage"><button type="submit">Send</button></body>');
+        res.write('<body><form action="/message" method="POST"><input type="text" name="txtmessage"><button type="submit">Send Message</button></body>');
         res.write('</html>');
         return res.end(); //este return es importante ya que detiene la ejecucion del script
         //notese que el resultado es desde /message
