@@ -5,7 +5,7 @@
   "main": "appv7.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon appv7.js",
+    "start": "nodemon appv8.js",
     "hwork01": "node hwork01/hwork01.js"
   },
   "repository": {
@@ -23,5 +23,8 @@
   "homepage": "https://github.com/hftamayo/sandboxnodejs#readme",
   "devDependencies": {
     "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
