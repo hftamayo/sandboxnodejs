@@ -6,12 +6,13 @@ node.js buscará en el sistema operativo esta ubicacion partiendo de /
 const path= require('path');
 const express = require('express');
 const { schedulingPolicy } = require('cluster');
-
+const rootDir = require('../util/path');
 const router = express.Router();
 
 //segundo midleware
 router.get('/', (req, res, next) => {
-    res.sendFile(path.join(__dirname,'../', 'views', 'shop.html'));
+    //leccion 73: se elimino la / y aun asi rutea
+    res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 });
 
 module.exports = router;
