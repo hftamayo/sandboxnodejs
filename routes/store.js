@@ -1,16 +1,13 @@
-/*
-la libreria path ayuda a construir las referencias absolutas
-hacia los scripts js, caso contrario, si nosotros ponemos './views/shop.html'
-node.js buscará en el sistema operativo esta ubicacion partiendo de /
-*/
 const path= require('path');
 const express = require('express');
 const { schedulingPolicy } = require('cluster');
 const rootDir = require('../util/path');
 const router = express.Router();
+const adminData = require('./admin3');
 
 //midlewares
 router.get('/', (req, res, next) => {
+    console.log('data from store.js', adminData.products);
     res.sendFile(path.join(rootDir, 'views', 'shop.html'));
 });
 
