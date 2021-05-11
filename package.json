@@ -5,7 +5,7 @@
   "main": "appv7.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon appv20.js",
+    "start": "nodemon appv21.js",
     "hwork01": "node hwork01/hwork01.js",
     "hwork02": "node hwork02/hwork02.js"
   },
@@ -27,6 +27,9 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "pug": "^3.0.2"
   }
 }
