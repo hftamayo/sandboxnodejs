@@ -5,11 +5,14 @@ const path= require('path');
 const express = require('express');
 const { schedulingPolicy } = require('cluster');
 const rootDir = require('../util/path');
+const adminData = require('./admin3');
 const router = express.Router();
 
 //segundo midleware
 router.get('/', (req, res, next) => {
-    res.render('shop');
+    //leccion 82: outputting dynamic content
+    const products = adminData.products;
+    res.render('shop', {prods: products, docTitle: 'Shop Best products'});
 });
 
 module.exports = router;
