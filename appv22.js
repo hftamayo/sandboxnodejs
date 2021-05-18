@@ -19,7 +19,7 @@ app.use(shopRoutes);
 
 
 app.use((req, res, next) => {
-    res.status(404).render('error404');
+    res.status(404).render('error404', {pageTitle: 'Page not found'});
 });
 
 app.listen(3005)

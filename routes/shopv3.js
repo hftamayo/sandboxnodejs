@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
     //leccion 82: outputting dynamic content
     const products = adminData.products;
-    res.render('shop', {prods: products, docTitle: 'Shop Best products'});
+    res.render('shop', {prods: products, pageTitle: 'Shop Best products', path: '/'});
 });
 
 module.exports = router;
