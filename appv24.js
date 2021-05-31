@@ -10,8 +10,8 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 
-const adminData = require('./routes/admin4');
-const shopRoutes = require('./routes/shopv4');
+const adminData = require('./routes/admin5');
+const shopRoutes = require('./routes/shopv5');
 app.use(bodyParser.urlencoded({ extended: false }));
 //serving main.css statically
 app.use(express.static(path.join(__dirname, 'public')));
