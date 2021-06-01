@@ -4,6 +4,7 @@ const rootDir = require('../util/path');
 const { exception } = require('console');
 const router = express.Router();
 const products = []; //for data management
+const categories = [];
 
 //admin/add-product -> via GET method
 router.get('/add-product', (req, res, next) => {
@@ -37,9 +38,10 @@ router.post('/add-product', (req, res, next) => {
 });
 
 router.post('/add-category', (req, res, next) => {
-    products.push({ title: req.body.title });
+    categories.push({ title: req.body.title });
     res.redirect('/category');
 });
 
 exports.routes = router;
 exports.products = products;
+exports.categories = categories;

@@ -23,12 +23,12 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/category', (req, res, next) => {
-    const categories = categoryData.categories;
+    const categories = adminData.categories;
     res.render('category', {
         cats: categories,
         pageTitle: 'Shop Best products',
         path: '/category',
-        hasProducts: categories.length > 0,
+        hasCategories: categories.length > 0,
         activeShop: true,
         productCSS: true
     });
