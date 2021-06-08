@@ -3,6 +3,8 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const errorController = require('./controllers/error');
+
 const app = express();
 
 //definicion de variables globales
@@ -19,8 +21,6 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 
-app.use((req, res, next) => {
-    res.status(404).render('error404', { pageTitle: 'Page not found' });
-});
+app.use(errorController.get404);
 
 app.listen(3005)
