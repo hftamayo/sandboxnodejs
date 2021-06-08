@@ -10,12 +10,12 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 
-const adminData = require('./routes/admin5');
-const shopRoutes = require('./routes/shopv5');
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 //serving main.css statically
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/admin', adminData.routes);//solo las rutas que inicien con /admin se redirigen a adminRoutes
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 
