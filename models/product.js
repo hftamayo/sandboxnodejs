@@ -1,45 +1,40 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
+const p = path.join(
+    path.dirname(process.mainModule.filename),
+    "data",
+    "products.json"
+  );
+
+const getProductsFromFile = cb => {
+  fs.readFile(p, (err, fileContent) => {
+    if (err) {
+        return cb([]);
+    } else {
+        cb(JSON.parse(fileContent));
+    }
+  });
+};
 
 module.exports = class Product {
-    constructor(t) {
-        this.title = t;
-    }
+  constructor(t) {
+    this.title = t;
+  }
 
-    save() {
-        //data es la carpeta donde estara el json
-        const p = path.
-            join(path.dirname(process.mainModule.filename),
-                'data', 'products.json');
-        fs.readFile(p, (err, fileContent) => {
-            //in case the file doesnt not exist
-            //it needs to be created
-            let products = [];
-            if (!err) {
-                products = JSON.parse(fileContent);
-            }
-            products.push(this);
-            fs.writeFile(p, JSON.stringify(products), (err) => {
-                console.log(err);
-            });
-        });
-    }
+  save() {
+      getProductsFromFile(products => {
+          products.push(this);
+          fs.writeFile(p, JSON.stringify(products), err => {
+              console.log(err);
+          });
+      });
+  }
 
-    /* metodo sincrono
+  /* metodo sincrono
     sin el callback genera un error
     */
-
-    static fetchAll(cb) {
-        //p se va a refactorar mas adelante
-        const p = path.
-            join(path.dirname(process.mainModule.filename),
-                'data', 'products.json');
-        fs.readFile(p, (err, fileContent) => {
-            if (err) {
-                cb([]);
-            }
-            cb(JSON.parse(fileContent));
-        });
-    }
+  static fetchAll(cb) {
+      getProductsFromFile(cb);
+  }
 };
