@@ -14,7 +14,9 @@ exports.getProduct = (req, res, next) => {
     //en routes/shop.js el parametro se llama productId
     const prodId = req.params.productId;
     //este log es en vscode
-    console.log(prodId);
+    Product.findById(prodId, product => {
+        console.log(product);
+    });
     res.redirect('/');
 }
 
