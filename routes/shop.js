@@ -9,6 +9,11 @@ const router = express.Router();
 router.get('/', shopController.getIndex);
 
 router.get('/products', shopController.getProducts);
+/*ejemplo de dynamic router
+si tengo un static router, favor ponerlo antes
+caso contrario nunca se alcanzara
+*/
+router.get('/products/:productId', shopController.getProduct);
 
 router.get('/cart', shopController.getCart);
 
