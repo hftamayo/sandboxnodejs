@@ -15,9 +15,12 @@ exports.getProduct = (req, res, next) => {
     const prodId = req.params.productId;
     //este log es en vscode
     Product.findById(prodId, product => {
-        console.log(product);
+        res.render('shop/product-detail', {
+            product: product, 
+            pageTitle: 'raro',
+            path: '/products'
+        });
     });
-    res.redirect('/');
 }
 
 exports.getIndex = (req, res, next) => {
