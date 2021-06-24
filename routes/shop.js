@@ -13,7 +13,7 @@ router.get('/products', shopController.getProducts);
 si tengo un static router, favor ponerlo antes
 caso contrario nunca se alcanzara
 */
-router.get('/products/:productId', shopController.getProduct);
+router.get('/product/:productId', shopController.getProduct);
 
 router.get('/cart', shopController.getCart);
 
