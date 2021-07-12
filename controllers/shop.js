@@ -54,7 +54,7 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.postCart = (req, res, next) => {
-    const prodId = req.body.prodId; //la propiedad hidden en prod-detail
+    const prodId = req.body.prodId; //la propiedad hidden en includes/add-to-cart
     Product.findById(prodId, (product) => {
         Cart.addProduct(prodId, product.price);
     });
