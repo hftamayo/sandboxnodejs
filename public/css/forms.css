@@ -15,6 +15,10 @@
   border: 1px solid #a1a1a1;
   font: inherit;
   border-radius: 2px;
+  white-space: normal;
+  text-align: left;
+  -moz-text-align-last: left;
+  text-align-last: left;
 }
 
 .form-control input:focus,

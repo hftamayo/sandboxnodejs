@@ -24,7 +24,7 @@ module.exports = class Product {
     this.id = id;
     this.title = title;
     this.imageUrl = imageUrl;
-    this.description = description;
+    this.description = description.trim();
     this.price = price;
   }
 
