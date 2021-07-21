@@ -14,14 +14,17 @@ exports.postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-    //params en el orden definido en el constructor del componente
-    const product = new Product(null, title, imageUrl, description, price);
-    product
-    .save()
-    .then(() => {
-        res.redirect('/');
-    })
-    .catch(err => console.log(err));
+    Product.create({
+        title: title,
+        imageUrl: imageUrl,
+        price: price,
+        description: description
+    }).then(result => {
+        console.log("Record successfully created");
+    }).catch(err => {
+        console.log(err);
+    });
+
 };
 
 exports.getEditProduct = (req, res, next) => {
