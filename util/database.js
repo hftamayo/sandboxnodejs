@@ -13,7 +13,7 @@ const pool = dbms.createPool({
 
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('nodecomplete', 'root', 'Node123$', {
+const sequelize = new Sequelize('nodecomplete', 'node', 'Node123$', {
     dialect: 'mysql', host: 'localhost'
 });
 
