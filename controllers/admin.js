@@ -13,11 +13,12 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-  Product.create({
+
+  req.user.createNewproduct({
     title: title,
     imageUrl: imageUrl,
     price: price,
-    description: description,
+    description: description
   })
     .then((result) => {
       console.log("Record successfully created");
@@ -34,8 +35,11 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect("/");
   }
   const prodId = req.params.productId;
-  Product.findByPk(prodId)
-    .then((product) => {
+  //the magic method is closely related to the table's name
+  req.user.getNewproducts({where: {id: prodId}})
+  //Product.findByPk(prodId)
+    .then((products) => {
+      const product = products[0];
       if (!product) {
         return res.redirect("/");
       }
@@ -75,11 +79,12 @@ exports.postEditProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  req.user.getNewproducts()
+  //Product.findAll()
     .then((products) => {
       res.render("admin/products", {
         prods: products,
-        pageTitle: "All Products",
+        pageTitle: "Product's Administration",
         path: "/admin/products",
       });
     })
