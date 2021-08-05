@@ -47,7 +47,7 @@ exports.getCart = (req, res, next) => {
     .getCart()
     .then((cart) => {
       return cart
-        .getProducts()
+        .getNewproducts()
         .then((products) => {
           res.render("shop/cart", {
             path: "/cart",
@@ -58,58 +58,43 @@ exports.getCart = (req, res, next) => {
         .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
-  /*
-  Cart.getCart((cart) => {
-    Product.fetchAll((products) => {
-      const cartProducts = [];
-      for (product of products) {
-        const cartProductData = cart.products.find(
-          (prod) => prod.id === product.id
-        );
-        if (cartProductData) {
-          cartProducts.push({ productData: product, qty: cartProductData.qty });
-        }
-      }
-
-    });
-  });
-  */
 };
 
 exports.postCart = (req, res, next) => {
-  const prodId = req.body.productId;
+  const prodId = req.body.prodId;
   let fetchedCart;
+  let newQuantity = 1;  
   req.user
     .getCart()
     .then((cart) => {
       fetchedCart = cart;
-      return cart.getProducts({ where: { id: prodId } });
+      return cart.getNewproducts({ where: { id: prodId } });
     })
     .then((products) => {
       let product;
       if (products.length > 0) {
         product = products[0];
       }
-      let newQuantity = 1;
       if (product) {
-        //...
+        const oldQuantity = product.cartItem.quantity;
+        newQuantity = oldQuantity + 1;
+        return product;
       }
       return Product.findByPk(prodId)
-        .then((product) => {
-          return fetchedCart.addProduct(product, {
-            through: { quantity: newQuantity },
-          }); //magic method based on Many2Many relationship
-        })
-        .catch((err) => console.log(err));
+    })
+    .then((product) => {
+      return fetchedCart.addNewproduct(product, {
+        through: { quantity: newQuantity },
+      });
     })
     .then(() => {
-      res.redirect('/cart');
+      res.redirect("/cart");
     })
     .catch((err) => console.log(err));
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
-  const prodId = req.body.prodId;
+  const prodId = req.body.productId;
   Product.findById(prodId, (product) => {
     Cart.deleteProduct(prodId, product.price);
     res.redirect("/cart");
