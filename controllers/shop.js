@@ -128,10 +128,10 @@ exports.postOrder = (req, res, next) => {
             })
           );
         })
-        .cath((err) => console.log(err));
+        .catch((err) => console.log(err));
     })
     .then((result) => {
-      return fetchedCart.setProducts(null);
+      return fetchedCart.setNewproducts(null);
     })
     .then((result) => {
       res.redirect("/orders");
@@ -141,7 +141,7 @@ exports.postOrder = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
   req.user
-    .getOrders({include: ['products']})
+    .getOrders({include: ['newproducts']})
     .then((orders) => {
       res.render("shop/orders", {
         path: "/orders",
@@ -149,7 +149,7 @@ exports.getOrders = (req, res, next) => {
         orders: orders
       });
     })
-    .cath((err) => console.log(err));
+    .catch((err) => console.log(err));
 };
 
 exports.getCheckout = (req, res, next) => {
