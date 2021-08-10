@@ -11,10 +11,25 @@ const pool = dbms.createPool({
 });
 */
 
+/* ejemplo de conexion a mysql con sequelize
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize('nodecomplete', 'node', 'Node123$', {
     dialect: 'mysql', host: 'localhost'
 });
+*/
+const mongoConnect = (callback) => {
+  const mongodb = require("mongodb");
+  const MongoClient = mongodb.MongoClient;
 
-module.exports = sequelize;
+  MongoClient.connect(
+      "mongodb+srv://node:Node123$@nodecluster.hfnls.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+  )
+    .then((client) => {
+      console.log("mongodb: connection established");
+      callback(client);
+    })
+    .catch((err) => console.log(err));
+};
+
+module.exports = mongoConnect;
