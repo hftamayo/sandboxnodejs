@@ -22,14 +22,26 @@ const mongoConnect = (callback) => {
   const mongodb = require("mongodb");
   const MongoClient = mongodb.MongoClient;
 
+  let _db; //el underscore significa que es una variable local
+  //el contenedor se crea onTheFly y gralmente por esta peticion del endpoint
   MongoClient.connect(
-      "mongodb+srv://node:Node123$@nodecluster.hfnls.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "mongodb+srv://node:Node123$@nodecluster.hfnls.mongodb.net/shop?retryWrites=true&w=majority"
   )
     .then((client) => {
       console.log("mongodb: connection established");
-      callback(client);
+      _db = client.db();
+      callback();
     })
     .catch((err) => console.log(err));
+  throw err;
 };
 
-module.exports = mongoConnect;
+const getDb = () => {
+    if(_db){
+        return _db;
+    }
+    throw 'No catalog found!';
+}
+
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
