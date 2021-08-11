@@ -14,12 +14,10 @@ exports.postAddProduct = (req, res, next) => {
   const price = req.body.price;
   const description = req.body.description;
 
-  req.user.createNewproduct({
-    title: title,
-    imageUrl: imageUrl,
-    price: price,
-    description: description
-  })
+  const product = new Product(title, imageUrl, price, description);
+
+  product
+    .save()
     .then((result) => {
       console.log("Record successfully created");
       return res.redirect("/admin/products");
@@ -29,6 +27,7 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
+/*
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit; //variable tipo String
   if (!editMode) {
@@ -103,4 +102,6 @@ exports.postDeleteProduct = (req, res, next) => {
   })
   .catch(err => console.log(err));
   res.redirect("/admin/products");
+
 };
+*/
