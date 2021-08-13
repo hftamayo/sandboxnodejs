@@ -27,18 +27,14 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
-/*
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit; //variable tipo String
   if (!editMode) {
     return res.redirect("/");
   }
   const prodId = req.params.productId;
-  //the magic method is closely related to the table's name
-  req.user.getNewproducts({where: {id: prodId}})
-  //Product.findByPk(prodId)
-    .then((products) => {
-      const product = products[0];
+  Product.findByPk(prodId)
+    .then((product) => {
       if (!product) {
         return res.redirect("/");
       }
@@ -61,25 +57,26 @@ exports.postEditProduct = (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
-  Product.findByPk(prodId)
-    .then((product) => {
-      product.title = updatedTitle;
-      product.price = updatedPrice;
-      product.imageUrl = updatedImageUrl;
-      product.description = updatedDesc;
-      return product.save();
-    })
-    .then(result => {
+
+  const product = new Product(
+    updatedTitle,
+    updatedPrice,
+    updatedDesc,
+    updatedImageUrl,
+    prodId
+  );
+
+  product
+    .save()
+    .then((result) => {
       console.log("Product updated");
       res.redirect("/admin/products");
     })
     .catch((err) => console.log(err));
-
 };
 
 exports.getProducts = (req, res, next) => {
-  req.user.getNewproducts()
-  //Product.findAll()
+  Product.fetchAll()
     .then((products) => {
       res.render("admin/products", {
         prods: products,
@@ -92,16 +89,11 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findByPk(prodId)
-  .then(product => {
-    return product.destroy();
-  })
-  .then(result => {
-    console.log("product deleted")
-    res.redirect('/admin/products');
-  })
-  .catch(err => console.log(err));
+  Product.deleteById(prodId)
+    .then(() => {
+      console.log("product deleted");
+      res.redirect("/admin/products");
+    })
+    .catch((err) => console.log(err));
   res.redirect("/admin/products");
-
 };
-*/
