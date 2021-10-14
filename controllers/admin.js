@@ -28,7 +28,7 @@ exports.postAddProduct = (req, res, next) => {
     .save()
     .then((result) => {
       console.log("Record successfully created");
-      return res.redirect("/admin/products");
+      res.redirect("/admin/products");
     })
     .catch((err) => {
       console.log(err);

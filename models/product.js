@@ -18,12 +18,12 @@ class Product {
       //update product's info
       dbOp = db
         .collection("products")
-        .updateOne({ _id: this._id }, { $set: {} });
+        .updateOne({ _id: this._id }, { $set: this });
     } else {
       //insert a new product
       dbOp = db.collection("products").insertOne(this);
     }
-    return db
+    return dbOp
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
   }
