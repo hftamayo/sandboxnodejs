@@ -69,8 +69,8 @@ exports.postEditProduct = (req, res, next) => {
   const product = new Product(
     updatedTitle,
     updatedPrice,
-    updatedDesc,
-    updatedImageUrl,
+    updatedDesc,    
+    updatedImageUrl,    
     prodId
   );
 
