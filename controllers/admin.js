@@ -10,16 +10,15 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const imageUrl = req.body.imageUrl;      
   const price = req.body.price;
   const description = req.body.description;
 
   const product = new Product(
     title,
-    imageUrl,
+    imageUrl,        
     price,
     description,
-    imageUrl,
     null,
     req.user._id
   );
@@ -62,15 +61,15 @@ exports.postEditProduct = (req, res, next) => {
   //req.body.<nombreControlenElForm>
   const prodId = req.body.productId;
   const updatedTitle = req.body.title;
+  const updatedImageUrl = req.body.imageUrl;  
   const updatedPrice = req.body.price;
-  const updatedImageUrl = req.body.imageUrl;
   const updatedDesc = req.body.description;
 
   const product = new Product(
     updatedTitle,
+    updatedImageUrl,            
     updatedPrice,
     updatedDesc,    
-    updatedImageUrl,    
     prodId
   );
 
