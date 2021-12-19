@@ -44,17 +44,12 @@ exports.getCart = (req, res, next) => {
   //console.log(req.user.cart); //sirve para verificar si el objeto no esta vacio
   req.user
     .getCart()
-    .then((cart) => {
-      return cart
-        .getNewproducts()
-        .then((products) => {
-          res.render("shop/cart", {
-            path: "/cart",
-            pageTitle: "Your Cart",
-            products: products,
-          });
-        })
-        .catch((err) => console.log(err));
+    .then((products) => {
+      res.render("shop/cart", {
+        path: "/cart",
+        pageTitle: "Your Cart",
+        products: products,
+      });
     })
     .catch((err) => console.log(err));
 };
@@ -67,6 +62,7 @@ exports.postCart = (req, res, next) => {
     })
     .then((result) => {
       console.log(result);
+      res.redirect('/cart');      
     });
   // let fetchedCart;
   // let newQuantity = 1;
