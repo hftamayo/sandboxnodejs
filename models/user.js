@@ -61,6 +61,14 @@ class User {
       );
   }
 
+  //bug en este metodo:
+  /*
+  se necesita verificar si los productos que estoy devolviendo
+  son los que realmente estan en el carro del usuario activo, aunque
+  este relacionado con sesiones pero el metodo tambien necesita refactoring
+  Poner atencion en el proceso de borrar un producto si éste tienen compras 
+  pendientes
+  */
   getCart() {
     const db = getDb();
     const productIds = this.cart.items.map((i) => {
