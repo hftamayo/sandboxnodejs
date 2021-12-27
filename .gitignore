@@ -2,3 +2,5 @@ message.txt
 node_modules/
 package-lock.json
 developer/07/
+package.json
+package-lock.json
