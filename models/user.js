@@ -112,10 +112,9 @@ class User {
           user: {
             _id: new ObjectId(this._id),
             name: this.name,
-          },
+          }
         };
-        return;
-        db.collection("orders").insertOne(order);
+        return db.collection("orders").insertOne(order);
       })
       .then((result) => {
         this.cart = { items: [] };
