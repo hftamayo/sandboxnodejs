@@ -20,6 +20,9 @@ const productSchema = new Schema({
     }
 });
 
+module.exports = moongose.model('Product', productSchema);
+
+
 
 
 
