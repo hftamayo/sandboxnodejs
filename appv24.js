@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
 const errorController = require("./controllers/error");
-//const User = require("./models/user");
+const User = require("./models/user");
 
 const app = express();
 
@@ -20,24 +20,39 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //serving main.css statically
 app.use(express.static(path.join(__dirname, "public")));
 
-// app.use((req, res, next) => {
-//   User.findById("61267055e959b8480f230d12")
-//     .then((user) => {
-//       req.user = new User(user.name, user.email, user.cart, user._id);
-//       next();
-//     })
-//     .catch((err) => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById("61df85611285555f2605e931")
+    .then((user) => {
+      req.user = user;
+      next();
+    })
+    .catch((err) => console.log(err));
+});
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-mongoose.connect(
-  "mongodb+srv://node:Node123$@nodecluster.hfnls.mongodb.net/shop?retryWrites=true&w=majority"
-).then(result => {
-  app.listen(3005);
-}).catch(err => {
-  console.log(err);
-});
+mongoose
+  .connect(
+    "mongodb+srv://node:Node123$@nodecluster.hfnls.mongodb.net/shop?retryWrites=true&w=majority"
+  )
+  .then((result) => {
+    User.findOne().then((user) => {
+      if (!user) {
+        const user = new User({
+          name: "hftamayo",
+          email: "hftamayo@gmail.com",
+          cart: {
+            items: [],
+          },
+        });
+        user.save();
+      }
+    });
+    app.listen(3005);
+  })
+  .catch((err) => {
+    console.log(err);
+  });

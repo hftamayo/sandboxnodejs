@@ -1,3 +1,29 @@
+const mongoose = require("mongoose");
+
+const Schema = mongoose.Schema;
+
+const userSchema = new Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  cart: {
+    items: [
+      {
+        productId: { type: Schema.Types.ObjectId, ref: 'Product', required: true },
+        quantity: { type: Number, required: true },
+      },
+    ],
+  },
+});
+
+module.exports = mongoose.model('User', userSchema);//User sera la referencia con el model de product.js
+
+
 // /*
 // const Sequelize = require('sequelize');
 
@@ -66,7 +92,7 @@
 //   se necesita verificar si los productos que estoy devolviendo
 //   son los que realmente estan en el carro del usuario activo, aunque
 //   este relacionado con sesiones pero el metodo tambien necesita refactoring
-//   Poner atencion en el proceso de borrar un producto si éste tienen compras 
+//   Poner atencion en el proceso de borrar un producto si éste tienen compras
 //   pendientes
 //   */
 //   getCart() {
