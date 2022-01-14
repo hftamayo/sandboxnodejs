@@ -19,7 +19,7 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description,
     imageUrl: imageUrl,
-    userId: req.user //mongoose filtra el objeto para extraer el id
+    userId: req.user, //mongoose filtra el objeto para extraer el id
   });
 
   product
@@ -81,6 +81,10 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+  /*
+  .select('title price imageUrl -id')
+    .populate("userId", "name") //fetching all user info as an object
+    */
     .then((products) => {
       res.render("admin/products", {
         prods: products,
