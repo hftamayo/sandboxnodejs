@@ -43,8 +43,14 @@ exports.getIndex = (req, res, next) => {
 exports.getCart = (req, res, next) => {
   //console.log(req.user.cart); //sirve para verificar si el objeto no esta vacio
   req.user
-    .getCart()
-    .then((products) => {
+  /* en la version anterior a la 6.0 se hacia de esta forma
+  execPopulate quedo deprecado
+    .populate('cart.items.productId')
+    .execPopulate()
+    */
+   .populate('cart.items.productId')
+    .then((user) => {
+      const products = user.cart.items;
       res.render("shop/cart", {
         path: "/cart",
         pageTitle: "Your Cart",
