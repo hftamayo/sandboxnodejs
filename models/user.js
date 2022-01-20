@@ -26,7 +26,7 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.methods.addToCart = function (product) {
+userSchema.methods.addToCart = function(product) {
   const cartProductIndex = this.cart.items.findIndex((cp) => {
     return cp.productId.toString() === product._id.toString();
   });
