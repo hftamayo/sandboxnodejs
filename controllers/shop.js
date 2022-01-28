@@ -93,10 +93,12 @@ exports.postOrder = (req, res, next) => {
       const order = new Order({
         user: {
           name: req.user.name,
-          userId: req.user.userId,
+          userId: req.user._id
+          //userId: "61df85611285555f2605e931",
         },
         products: products,
       });
+      //console.log("username: ", order.user.name, " id: ", order.user.userId);
       return order.save();
     })
     .then((result) => {

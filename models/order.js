@@ -15,8 +15,8 @@ const orderSchema = new Schema({
     },
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'User',      
       required: true,
+      ref: 'User', //deprecado este tipo de referencias en la versión 6.x de mongoose      
     },
   },
 });

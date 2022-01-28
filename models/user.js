@@ -62,7 +62,7 @@ userSchema.methods.clearCart = function(){
   return this.save();
 }
 
-module.exports = mongoose.model("User", userSchema); //User sera la referencia con el model de product.js
+module.exports = mongoose.model('User', userSchema); //User sera la referencia con el model de product.js
 
 // /*
 // const Sequelize = require('sequelize');
