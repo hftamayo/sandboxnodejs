@@ -1,3 +1,5 @@
+const User = require("../models/user");
+
 exports.getLogin = (req, res, next) => {
   //si la cookie no existe, esta variable da error
   /*
@@ -7,7 +9,7 @@ exports.getLogin = (req, res, next) => {
   .trim()
   .split("=")[1] === 'true';
   */
- console.log(req.session.isLoggedIn);
+  console.log(req.session.isLoggedIn);
   res.render("auth/login", {
     path: "/login",
     pageTitle: "Login",
@@ -17,6 +19,11 @@ exports.getLogin = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
   //gestion por cookies: res.setHeader("Set-Cookie", "loggedIn=true; HttpOnly"); //HttpOnly = previene XSS
-  req.session.isLoggedIn = true;
-  res.redirect("/");
+  User.findById("61df85611285555f2605e931")
+    .then((user) => {
+      req.session.isLoggedIn = true;
+      req.session.user = user;
+      res.redirect("/");
+    })
+    .catch((err) => console.log(err));
 };

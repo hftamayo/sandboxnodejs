@@ -5,7 +5,7 @@ exports.getAddProduct = (req, res, next) => {
     pageTitle: "Add Product",
     path: "/admin/add-product",
     editing: false,
-    isAuthenticated: req.isLoggedIn,    
+    isAuthenticated: req.session.isLoggedIn,    
   });
 };
 
@@ -20,7 +20,7 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description,
     imageUrl: imageUrl,
-    userId: req.user, //mongoose filtra el objeto para extraer el id
+    userId: req.session.user, //mongoose filtra el objeto para extraer el id
   });
 
   product
@@ -50,7 +50,7 @@ exports.getEditProduct = (req, res, next) => {
         path: "/admin/edit-product",
         editing: editMode,
         product: product,
-        isAuthenticated: req.isLoggedIn,        
+        isAuthenticated: req.session.isLoggedIn,        
       });
     })
     .catch((err) => {
@@ -92,7 +92,7 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: "Product's Administration",
         path: "/admin/products",
-        isAuthenticated: req.isLoggedIn,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));

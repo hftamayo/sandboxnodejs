@@ -8,7 +8,7 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: "All Products",
         path: "/products",
-        isAuthenticated: req.isLoggedIn,        
+        isAuthenticated: req.session.isLoggedIn,        
       });
     })
     .catch((err) => console.log(err));
@@ -23,7 +23,7 @@ exports.getProduct = (req, res, next) => {
         product: product,
         pageTitle: product.title,
         path: "/products",
-        isAuthenticated: req.isLoggedIn,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
@@ -36,7 +36,7 @@ exports.getIndex = (req, res, next) => {
         prods: products,
         pageTitle: "Shop right here",
         path: "/",
-        isAuthenticated: req.isLoggedIn,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -46,7 +46,7 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   //console.log(req.user.cart); //sirve para verificar si el objeto no esta vacio
-  req.user
+  req.session.user
     /* en la version anterior a la 6.0 se hacia de esta forma
   execPopulate quedo deprecado
     .populate('cart.items.productId')
@@ -59,7 +59,7 @@ exports.getCart = (req, res, next) => {
         path: "/cart",
         pageTitle: "Your Cart",
         products: products,
-        isAuthenticated: req.isLoggedIn,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
@@ -69,7 +69,7 @@ exports.postCart = (req, res, next) => {
   const prodId = req.body.prodId;
   Product.findById(prodId)
     .then((product) => {
-      return req.user.addToCart(product);
+      return req.session.user.addToCart(product);
     })
     .then((result) => {
       console.log(result);
@@ -79,7 +79,7 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.prodId;
-  req.user
+  req.session.user
     .deleteItemFromCart(prodId)
     .then((result) => {
       res.redirect("/cart");
@@ -121,7 +121,7 @@ exports.getOrders = (req, res, next) => {
         path: "/orders",
         pageTitle: "Your Orders",
         orders: orders,
-        isAuthenticated: req.isLoggedIn,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => console.log(err));
