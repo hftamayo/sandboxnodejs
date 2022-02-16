@@ -20,7 +20,7 @@ exports.postAddProduct = (req, res, next) => {
     price: price,
     description: description,
     imageUrl: imageUrl,
-    userId: req.session.user, //mongoose filtra el objeto para extraer el id
+    userId: req.user, //mongoose filtra el objeto para extraer el id
   });
 
   product

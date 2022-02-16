@@ -46,7 +46,7 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   //console.log(req.user.cart); //sirve para verificar si el objeto no esta vacio
-  req.session.user
+  req.user
     /* en la version anterior a la 6.0 se hacia de esta forma
   execPopulate quedo deprecado
     .populate('cart.items.productId')
