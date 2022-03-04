@@ -28,14 +28,31 @@ exports.getSignup = (req, res, next) => {
 
 exports.postLogin = (req, res, next) => {
   //gestion por cookies: res.setHeader("Set-Cookie", "loggedIn=true; HttpOnly"); //HttpOnly = previene XSS
-  User.findById("61df85611285555f2605e931")
+  const email = req.body.email;
+  const password = req.body.password;
+
+  User.findOne({ email: email })
     .then((user) => {
-      req.session.isLoggedIn = true;
-      req.session.user = user;
-      req.session.save((err) => {
-        console.log(err);
-        res.redirect("/");
-      }); //para evitar cualquier error de refresh del DOM
+      if (!user) {
+        return res.redirect("/login");
+      }
+      bcrypt
+        .compare(password, user.password)
+        .then((doMatch) => {
+          if (doMatch) {
+            req.session.isLoggedIn = true;
+            req.session.user = user;
+            return req.session.save((err) => {
+              console.log(err);
+              res.redirect("/");
+            }); //para evitar cualquier error de refresh del DOM
+          }
+          res.redirect("/login");
+        })
+        .catch((err) => {
+          console.log(err);
+          res.redirect("/login");
+        });
     })
     .catch((err) => console.log(err));
 };
@@ -50,18 +67,18 @@ exports.postSignup = (req, res, next) => {
         return res.redirect("/signup");
       }
       return bcrypt
-      .hash(password, 12)
-      .then(hashedPassword => {
-        const user = new User({
-          email: email,
-          password: hashedPassword,
-          cart: { items: [] },
+        .hash(password, 12)
+        .then((hashedPassword) => {
+          const user = new User({
+            email: email,
+            password: hashedPassword,
+            cart: { items: [] },
+          });
+          return user.save();
+        })
+        .then((result) => {
+          res.redirect("/login");
         });
-        return user.save();
-      })
-      .then((result) => {
-        res.redirect("/login");
-      })      
     })
     .catch((err) => {
       console.log(err);
