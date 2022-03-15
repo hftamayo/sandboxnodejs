@@ -94,18 +94,18 @@
     </li>
 
     <% if(!isAuthenticated){ %>
-    <li class="mobile-header__item">
+    <li class="mobile-nav__item">
       <a class="<%= path === '/login' ? 'active' : '' %>" href="/login"
         >Login</a
       >
     </li>
-    <li class="mobile-header__item">
+    <li class="mobile-nav__item">
       <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup"
         >Signup</a
       >
     </li>
     <% } else { %>
-    <li class="mobile-header__item">
+    <li class="mobile-nav__item">
       <form action="/logout" method="post">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <button type="submit">Logout</button>
