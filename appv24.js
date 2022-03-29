@@ -20,6 +20,13 @@ const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: "sessions",
 });
+
+//catching errors
+store.on('error', function(error) {
+  console.log(error);
+});
+
+
 const csrfProtection = csrf();
 
 //definicion de variables globales
