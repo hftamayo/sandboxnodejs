@@ -4,11 +4,13 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 
 const User = require("../models/user");
 
-const transporter = nodemailer.createTransport(sendgridTransport({
-  auth: {
-    api_key: 'sendgrid api key'
-  }
-}));
+const transporter = nodemailer.createTransport(
+  sendgridTransport({
+    auth: {
+      api_key: "sendgrid api key",
+    },
+  })
+);
 
 exports.getLogin = (req, res, next) => {
   let message = req.flash("error");
@@ -110,12 +112,12 @@ exports.postSignup = (req, res, next) => {
           de los usuarios */
           return transporter.sendMail({
             to: email,
-            from: 'users@letsorder.com',
-            subject: 'Requested new user for Lets Order',
-            html: '<h3>Your account has been created</h3>',
+            from: "users@letsorder.com",
+            subject: "Requested new user for Lets Order",
+            html: "<h3>Your account has been created</h3>",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
         });
     })
@@ -128,5 +130,19 @@ exports.postLogout = (req, res, next) => {
   req.session.destroy((err) => {
     console.log(err);
     res.redirect("/");
+  });
+};
+
+exports.getReset = (req, res, next) => {
+  let message = req.flash("error");
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+  res.render("auth/reset", {
+    path: "/reset",
+    pageTitle: "Reset Password",
+    errorMessage: message,
   });
 };
