@@ -105,6 +105,18 @@ exports.postSignup = (req, res, next) => {
         })
         .then((result) => {
           res.redirect("/login");
+          /* la siguiente rutina es muy lenta, buscar una forma 
+          para reescribirla, en especial si hay varias peticiones por parte
+          de los usuarios */
+          return transporter.sendMail({
+            to: email,
+            from: 'users@letsorder.com',
+            subject: 'Requested new user for Lets Order',
+            html: '<h3>Your account has been created</h3>',
+          });
+        })
+        .catch(err => {
+          console.log(err);
         });
     })
     .catch((err) => {
