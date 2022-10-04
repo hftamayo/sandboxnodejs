@@ -201,7 +201,15 @@ exports.getNewPassword = (req, res, next) => {
         pageTitle: "Reset Password",
         errorMessage: message,
         userId: user._id.toString(),
+        passwordToken: token,
       });
     })
     .catch((err) => console.log(err));
 };
+
+
+exports.postNewPassword = (req, res, next) => {
+  const newPassword = req.body.password;
+  const userId = req.body.userId;
+  const passwordToken = req.body.passwordToken;
+}
