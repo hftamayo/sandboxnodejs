@@ -29,7 +29,20 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect("/admin/products");
     })
     .catch((err) => {
-      console.log(err);
+      return res.status(500).render("admin/edit-product", {
+        pageTitle: "Add Product",
+        path: "/admin/add-product",
+        editing: false,
+        hasError: true,
+        product: {
+          title: title,
+          imageUrl: imageUrl,
+          price: price,
+          description: description,
+        },
+        errorMessage: 'Database operation failed',
+        validationErrors: []
+      });
     });
 };
 
@@ -99,7 +112,7 @@ exports.getProducts = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.deleteOne({_id: prodId, userId: req.user._id})
+  Product.deleteOne({ _id: prodId, userId: req.user._id })
     .then(() => {
       console.log("product deleted");
       res.redirect("/admin/products");
